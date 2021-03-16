@@ -11,26 +11,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   TextEditingController _nameCtlr=TextEditingController();
 
+  String groupRadioItem = '';
+
   Widget _textFormField(TextEditingController controller,){
-    return TextFormField(
-        controller:controller ,
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'প্রয়োজনীয় তথ্য যোগ করুন';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          filled: true,
-          border: InputBorder.none,
-          fillColor: Colors.white,
-          hintText: 'এখানে লিখুন',
-        ));
+    return Padding(
+      padding: const EdgeInsets.only(left: 20,right: 20),
+      child: TextFormField(
+          controller:controller ,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please? Give some text';
+            }
+            return null;
+          },
+          decoration: InputDecoration(
+            filled: true,
+            border: InputBorder.none,
+            fillColor: Colors.white,
+            hintText: 'Input Some Text',
+          )),
+    );
   }
 
   Widget _title(String text){
     return  Container(
       alignment: Alignment.topLeft,
+      padding: const EdgeInsets.only(left: 20,right: 20),
       child: Text(text,
           style: TextStyle(
               color: Colors.black,
@@ -44,6 +50,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.white,
@@ -75,11 +82,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                      Padding(
                        padding: const EdgeInsets.only(left: 20,right: 20),
                        child: Container(
-                         height: 200,
-                         width: 300,
+                         height:MediaQuery.of(context).size.height/4,
+                         width: MediaQuery.of(context).size.width/3,
                          decoration: BoxDecoration(
-                             color: Colors.white,
+                             color: Colors.black12,
                            borderRadius: BorderRadius.circular(15)
+                         ),
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                           children: [
+                             Row(
+                               children: [
+                                 _title('Mobile Number'),
+                                 Text('*',style: TextStyle(color: Colors.red),)
+                               ],
+                             ),
+                             _textFormField(_nameCtlr),
+                             Row(
+                               children: [
+                                 _title('Delivery Address(Full)'),
+                                 Text('*',style: TextStyle(color: Colors.red),)
+                               ],
+                             ),
+                             _textFormField(_nameCtlr),
+                             _title('Address (Goole Map)'),
+                             _textFormField(_nameCtlr),
+                             SizedBox(height: 10,),
+                           ],
                          ),
                        ),
                      ),
@@ -90,11 +119,59 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                      Padding(
                        padding: const EdgeInsets.only(left: 20,right: 20),
                        child: Container(
-                         height: 200,
-                         width: 300,
+                         height:MediaQuery.of(context).size.height/4,
+                         width: MediaQuery.of(context).size.width/3,
                          decoration: BoxDecoration(
-                             color: Colors.white,
+                             color: Colors.black12,
                              borderRadius: BorderRadius.circular(15)
+                         ),
+                         child: Column(
+                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Padding(
+                               padding: const EdgeInsets.only(left: 30),
+                               child: Row(
+                                 children: [
+                                   Radio(
+                                     value: 'Item 1',
+                                     groupValue: groupRadioItem,
+                                     activeColor: Colors.red,
+                                     onChanged: (val){
+                                       setState(() {
+                                         groupRadioItem = val;
+                                         print(groupRadioItem);
+                                       });
+                                     },
+                                   ),
+                                   Image.asset('image/money.png',height: 50,width: 50,),
+                                   SizedBox(width: 20,),
+                                   Text('Cash On Delivery')
+                                 ],
+                               ),
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.only(left: 30),
+                               child: Row(
+                                 children: [
+                                   Radio(
+                                     value: 'Item 2',
+                                     groupValue: groupRadioItem,
+                                     activeColor: Colors.red,
+                                     onChanged: (val){
+                                       setState(() {
+                                         groupRadioItem = val;
+                                         print(groupRadioItem);
+                                       });
+                                     },
+                                   ),
+                                   Image.asset('image/cashless-payment.png',height: 50,width: 50,),
+                                   SizedBox(width: 20,),
+                                   Text('Online Payment')
+                                 ],
+                               ),
+                             ),
+                           ],
                          ),
                        ),
                      )
@@ -125,7 +202,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               child: RaisedButton(
                                 color: Colors.pink,
                                 onPressed: (){
-                                  Navigator.pushNamed(context, '/checkoutScreen');
                                 },
                                 child: Text('Proceed to Pay',style:GoogleFonts.roboto(color:Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
                               )

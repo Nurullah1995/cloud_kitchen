@@ -1,14 +1,17 @@
 import 'package:cloud_kitchen/Util/Constant.dart';
+import 'package:cloud_kitchen/Util/FakeDatabase.dart';
+import 'package:cloud_kitchen/View/Screen/ProductCategory_screen.dart';
 import 'package:flutter/material.dart';
 
 
 class CategoryCard extends StatelessWidget {
-  List<String> litems = ["Third","Third","Third","Third","Third","Third","Third","Third","Third",];
+  List<Product> iconlis;
+  CategoryCard(this.iconlis);
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-        itemCount: litems.length,
+        itemCount: iconlis.length,
         itemBuilder: (BuildContext ctxt, int index) {
           return Container(
             height: MediaQuery.of(context).size.height/8,
@@ -25,11 +28,18 @@ class CategoryCard extends StatelessWidget {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.ac_unit,color: Constant.appbarTextColor,),
-                    onPressed: (){},
+                    onPressed: (){
+                      print('clicked category');
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryScreen()));
+                    },
                   ),
                 ),
                 SizedBox(height: 5,),
-                Text(litems[index]),
+                Center(
+                  child: Text(iconlis[index].name.substring(1,6).toUpperCase(),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             )
           );
